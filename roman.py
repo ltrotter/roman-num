@@ -7,6 +7,9 @@ class Roman:
         self.roman = romanString
         self.decimal = self.decimal()
 
+    def __repr__(self):
+        return self.roman
+
     def decimal(self):
         decomposed = self.decompose()
         val = sum(Roman.charMap[c[0]]*c[1]*c[2] for c in decomposed)
@@ -29,3 +32,4 @@ class Roman:
                 count = 1
         decomposed.append((letter,count,1))
         return decomposed
+
