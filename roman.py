@@ -17,9 +17,12 @@ class Roman:
             if letter == self.roman[i]:
                 count += 1
             else:
-                decomposed.append((letter,count))
+                if Roman.charMap[letter] < Roman.charMap[self.roman[i]]:
+                    sign = -1
+                else:
+                    sign = 1
+                decomposed.append((letter,count,sign))
                 letter = self.roman[i]
                 count = 1
-        decomposed.append((letter,count))
-
+        decomposed.append((letter,count,1))
         return decomposed
