@@ -8,3 +8,18 @@ class Roman:
 
     def decimal(self):
         pass
+
+    def decompose(self):
+        decomposed = []
+        letter = self.roman[0]
+        count = 1
+        for i in range(1, len(self.roman)):
+            if letter == self.roman[i]:
+                count += 1
+            else:
+                decomposed.append((letter,count))
+                letter = self.roman[i]
+                count = 1
+        decomposed.append((letter,count))
+
+        return decomposed
