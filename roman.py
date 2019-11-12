@@ -5,9 +5,12 @@ class Roman:
 
     def __init__(self, romanString):
         self.roman = romanString
+        self.decimal = self.decimal()
 
     def decimal(self):
-        pass
+        decomposed = self.decompose()
+        val = sum(Roman.charMap[c[0]]*c[1]*c[2] for c in decomposed)
+        return val
 
     def decompose(self):
         decomposed = []
