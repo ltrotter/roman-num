@@ -26,27 +26,19 @@ class Roman:
         return self.roman
 
     def fromString(self):
-        decomposed = self.decompose()
-        val = sum(Roman.charMap[c[0]]*c[1]*c[2] for c in decomposed)
-        return val
-
-    def decompose(self):
-        decomposed = []
-        letter = self.roman[0]
-        count = 1
-        for i in range(1, len(self.roman)):
-            if letter == self.roman[i]:
-                count += 1
-            else:
-                if Roman.charMap[letter] < Roman.charMap[self.roman[i]]:
-                    sign = -1
+        totalVal = 0
+        for i in range(0, len(self.roman)):
+            currentChar = self.roman[i]
+            currentVal = Roman.charMap[currentChar]
+            if i <= len(self.roman)-2:
+                nextVal = Roman.charMap[self.roman[i+1]]
+                if currentVal >= nextVal:
+                    totalVal += currentVal
                 else:
-                    sign = 1
-                decomposed.append((letter,count,sign))
-                letter = self.roman[i]
-                count = 1
-        decomposed.append((letter,count,1))
-        return decomposed
+                    totalVal -= currentVal
+            else:
+                totalVal += currentVal
+        return totalVal
 
     def fromInt(self):
         romanList = list()
