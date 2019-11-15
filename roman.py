@@ -12,11 +12,11 @@ class Roman:
                 msg = "Input string is not a legal roman numeral, do you mean \"{}\"?".format(self.fromInt())
                 raise InputError(msg)
         elif type(inputValue) == int:
-            if inputValue < 4000:
+            if 0 < inputValue < 4000:
                 self.decimal = inputValue
                 self.roman = self.fromInt()
             else:
-                msg = "Cannot create a roman numeral higher than 3999"
+                msg = "Cannot create a roman numeral higher than 3999 or lower than 1"
                 raise InputError(msg)
         else:
             msg = "A roman numeral can only be created from an integer or a string"
@@ -24,6 +24,7 @@ class Roman:
 
     def __repr__(self):
         return self.roman
+
 
     def fromString(self):
         totalVal = 0
@@ -50,7 +51,7 @@ class Roman:
             if 0 < count < 4:
                 romanList.append(count * Roman.valMap[val])
             elif count == 4:
-                if romanList[-1] == Roman.valMap[singleChars[i-1]]:
+                if romanList != list() and romanList[-1] == Roman.valMap[singleChars[i-1]]:
                     romanList[-1] = Roman.valMap[val] + Roman.valMap[singleChars[i-2]]
                 else:
                     romanList.append(Roman.valMap[val] + Roman.valMap[singleChars[i-1]])
@@ -58,7 +59,6 @@ class Roman:
         return "".join(romanList)
 
 class InputError(Exception):
-    """Exception raised for errors in the input
-    """
+    """Exception raised for errors in the input"""
     def __init__(self, message):
         self.message = message
