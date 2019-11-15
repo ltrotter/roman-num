@@ -1,3 +1,25 @@
+import operator
+
+def natural_binary_operators(cls):
+    for name, op in {
+        '__add__': operator.add,
+        '__sub__': operator.sub,
+        '__mul__': operator.mul,
+        '__truediv__': operator.floordiv,
+        '__floordiv__': operator.floordiv,
+        '__mod__': operator.mod,
+        '__pow__': operator.pow,
+        '__lt__': operator.lt,
+        '__le__': operator.le,
+        '__eq__': operator.eq,
+        '__ne__': operator.ne,
+        '__ge__': operator.ge,
+        '__gt__': operator.gt
+    }.items():
+        setattr(cls, name, cls._make_binop(op))
+    return cls
+
+@natural_binary_operators
 class Roman:
     """Class for Roman numeral object"""
 
@@ -25,6 +47,15 @@ class Roman:
     def __repr__(self):
         return self.roman
 
+    @classmethod
+    def _make_binop(cls, operator):
+        def binop(self, other):
+            result = operator(self.decimal, other.decimal)
+            if type(result) == bool:
+                return result
+            else:
+                return cls(result)
+        return binop
 
     def fromString(self):
         totalVal = 0
